@@ -5,7 +5,7 @@
 \application\mobile\controller\Cart.php
 	    public function cart4(){ 			//这方法修改
 
-
+	    	// -------------------------------------修改的地方
             if ($promotion_bargain_goods_item['goods_num'] <= $promotion_bargain_goods_item['buy_num'] ) {
                 // 统计订单已支付的数量是否超过了 goods_num
                 $goods_num = Db::view('Order','order_id,pay_status,prom_type,prom_id')
