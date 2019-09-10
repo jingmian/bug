@@ -1,0 +1,20 @@
+手机端--砍价活动--库存为1的商品,用户砍价成功时无法直接支付。
+	保证商品库存足够多，这BUG不会出现。
+
+
+\application\mobile\controller\Cart.php
+	    public function cart4(){ 			//这方法修改
+
+
+            if ($promotion_bargain_goods_item['goods_num'] <= $promotion_bargain_goods_item['buy_num'] ) {
+                // 统计订单已支付的数量是否超过了 goods_num
+                $goods_num = Db::view('Order','order_id,pay_status,prom_type,prom_id')
+                    ->view('OrderGoods','goods_num','OrderGoods.order_id=Order.order_id','LEFT')
+                    ->where('prom_id',$order['prom_id'])
+                    ->where('pay_status',1)
+                    ->where('order_status','in','0,1,2,4')
+                    ->sum('goods_num');
+                if($promotion_bargain_goods_item['goods_num'] <= $goods_num ){
+                    $this->error('对不起，该商品数量已被抢空' );
+                }
+            }
