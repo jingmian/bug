@@ -1,0 +1,57 @@
+git.txt
+	基本操作命令
+
+我的git
+	https://github.com/yuhjg
+
+教程
+	https://gitbook.cn/books/5bc942b8b13b3176ccdaf9e9/index.html
+
+	http://rogerdudler.github.io/git-guide/index.zh.html 这篇教程也不错的
+
+git下载
+	https://git-scm.com/downloads
+
+Git 命令个人开发
+	git help：Git 指令帮助手册
+
+git init：（个人仓库）仓库初始化
+
+配置用户名：git config user.name "用户名"（跟踪 who 修改记录）
+配置邮箱：git config user.email "邮箱"（多人开发间的沟通）
+
+git config -l：查看配置信息命令
+
+配置全局用户名：git config --global user.name "用户名"（跟踪 who 修改记录）
+配置全局邮箱：git config --global user.email "邮箱"（多人开发间的沟通）
+
+git status ：查看文件的状态
+git add：将工作区的文件保存到暂缓区
+git commit：将暂缓区的文件提交到当前分支
+git add . 命令 将工作区的文件保存到暂缓区
+git commit -m "添加了新文件" 提交
+git log：查看文件的修改日志
+git reflog ：查看分支引用记录（能够查看所有的版本号）
+git diff：查看文件最新改动的地方
+
+git reset：版本回退（建议加上––hard 参数，Git 支持无限次后悔）
+回退到上一个版本：git reset ––hard HEAD^
+回退到上上一个版本：git reset ––hard HEAD^^
+回退到上 N 个版本：git reset ––hard HEAD~N（N 是一个整数）
+回退到任意一个版本：git reset ––hard 版本号
+
+git clone：下载远程仓库到本地
+
+下载远程仓库到当前路径：git clone 仓库的URL
+下载远程仓库到特定路径：git clone 仓库的URL 存放仓库的路径
+
+git pull：下载远程仓库的最新信息到本地仓库
+	即 git clone https://github.com/xxxcode/git.git
+
+git push：将本地的仓库信息推送到远程仓库
+
+提交时如果远程仓库有其它人提交的最新代码，必须先 pull，再提交
+
+
+
+git clone https://github.com/yuhjg/bug.git
