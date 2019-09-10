@@ -1,0 +1,28 @@
+后台--预售活动-状态，支付时间过了，自动结束预售活动
+
+
+修改模型
+\application\admin\controller\PreSell.php
+
+    public function getFinishDescAttr($value, $data){
+        if($data['is_finished'] == 0){
+            if($data['sell_start_time'] > time()){
+                return '未开始';
+            }elseif($data['sell_start_time'] < time() && $data['sell_end_time'] > time()){
+                return '进行中';
+            }elseif($data['pay_end_time'] > time()) {
+                return '尾款支付中';
+            }else{
+                // 过了尾款支付时间，自动结束活动
+                $this->where('pre_sell_id',$data['pre_sell_id'])->update(['is_finished'=>1]);
+                return '已过期';
+            }
+        }else if($data['is_finished'] == 1){
+            return '结束(待处理)';
+        }else if($data['is_finished'] == 2){
+            return '成功结束';
+        }else{
+            return '失败结束';
+        }
+    }
+    
