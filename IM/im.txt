@@ -1,0 +1,338 @@
+window服务器
+	phpstudy
+
+linux 配置
+	https://lnmp.org/faq/lnmp-vhost-add-howto.html
+
+
+复制
+	cp -rf ./a ../b
+移动
+	mv ./a ./b
+		
+linux目录
+	/vendor/GatewayWorker-linux/
+
+
+
+php -v
+httpd -v 
+rpm -qa |gerp httpd
+
+
+虚拟主机管理基本命令介绍：lnmp vhost {add|list|del}
+
+输入，添加域名 im22.tpshop.cn
+	lnmp vhost add
+	lnmp vhost list
+	lnmp vhost del
+	/home/wwwroot/im22.tpshop.cn
+find /* -name im22.tpshop.cn
+cd /home/wwwroot/im22
+rar x etc.rar
+unzip ..zip
+/home/oldboy/tools/rar x b2_IM.rar
+find /* -name rar
+1.3以上版本，可以在添加虚拟主机时选择创建数据库，也可以单独使用 lnmp database add 按提示添加数据库，添加的用户名和数据库名是同名的。
+添加数据库命令：lnmp database add
+编辑数据库用户密码命令：lnmp database edit
+删除数据库命令：lnmp database del
+列出所有数据库命令：lnmp database list
+
+
+
+
+##列出网站(虚拟主机)##
+	执行： lnmp vhost list
+
+
+-----------------------------------mysql 远程访问
+
+	mysql -h localhost -uroot -proot
+	GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '123456';
+	flush privileges;
+
+	GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '123456' WITH GRANT OPTION;
+	flush privileges;
+
+	mysql -h localhost -uroot -proot
+	show databases;
+	use xcb;
+	show tables;
+	
+
+	grant all PRIVILEGES on test.* to andy@'192.168.1.100' identified by '123456';
+	**上面的语句表示将 test 数据库的所有权限授权给 andy 这个用户，允许 andy 用户在 192.168.1.100这个 IP 进行远程登陆，并设置 andy 用户的密码为 123456 。
+
+	**查mysql版本
+	mysql --help |grep Distrib
+	mysql -V
+
+	**mysql 查看所有用户的语句
+	select user();
+
+	**查询数据库的用户（看到如下内容表示创建新用户成功了）
+ 	SELECT DISTINCT CONCAT('User: ''',user,'''@''',host,''';') AS query FROM mysql.user;
+	select user,host from user;
+
+ 	http://www.cnblogs.com/chenjw-note/p/5887908.html
+ 	Linux系统MySQL开启远程连接
+ 	https://www.cnblogs.com/liulei-LL/p/7898804.html
+ 	忘密码
+
+
+	导入数据库
+	mysql -h localhost -uroot -proot
+	1、首先建空数据库
+	mysql>create database dbname ;
+	2、导入数据库
+	方法一：
+	（1）选择数据库
+	mysql>use dbname ;
+	（2）设置数据库编码
+	mysql>set names utf8;
+	（3）导入数据（注意sql文件的路径）
+	mysql>source /home/xxxx/dbname .sql;
+
+	一、导出数据库用mysqldump命令
+	（注意:先cd到mysql的运行路径下，再执行一下命令）：
+	1、导出数据和表结构：
+	mysqldump -u用户名 -p密码 数据库名 > 数据库名.sql
+	mysqldump -uroot -p dbname > dbname .sql
+	敲回车后会提示输入密码
+	2、只导出表结构
+	mysqldump -u用户名 -p密码 -d 数据库名 > 数据库名.sql
+	mysqldump -uroot -p -d dbname > dbname .sql
+	1.只导出数据
+  		mysqldump -t -hip-ufabu -p73R4_h8td6fE  database table > file.sql
+  		
+	导出数据库
+	    mysqldump 数据库名 -uroot -p --tables 某个表名1 某个表名2>tp_sms_template.sql
+	    mysqldump www_asgoo_net -uroot -p --tables tp_sms_template >tp_sms_template.sql
+
+	导入某个表
+	    mysql -u用户名 -p密码 数据库名 < 数据库名.sql
+	    mysql -uroot -p asgoo < tp_sms_template.sql
+
+
+
+	如果不能远程连接，开启端口
+		https://blog.csdn.net/c233728461/article/details/52679558
+
+	并且安装iptables-services：
+		yum install iptables-services
+	设置开机启动：
+	systemctl enable iptables
+
+	systemctl stop iptables
+	systemctl start iptables
+	systemctl restart iptables
+	systemctl reload iptables
+
+	保存设置：
+	service iptables save
+
+	vi /etc/sysconfig/iptables
+		发现有一个不是 -A INPUT -p tcp -m tcp --dport 3306 -j ACCEPT
+		要改成 ACCEPT
+		如果没有这行，就加上保存
+	systemctl restart iptables 然后重启
+
+	yum -y remove iptables-services
+
+
+------------------虚拟目录 重启命令
+	/home/wwwroot/im22/
+	虚拟域名配置
+	/usr/local/nginx/conf/vhost
+		thinkphp
+	重启
+	/etc/init.d/php-fpm restart
+	/etc/init.d/nginx restart
+	虚拟目录
+	/usr/local/nginx/conf
+	查找
+	find /* -name 
+	find /* -name vhost
+
+	service mysql stop
+	service mysql start
+	service mysql restart
+
+
+	开启im
+	cd /home/wwwroot/im22/vendor/GatewayWorker-linux/
+	cd /home/wwwroot/im33/vendor/GatewayWorker-linux/
+	php start.php start -d
+	php start.php stop
+	php start.php status
+	
+	php yourfile.php {start|stop|restart|reload|status|connections} [-d]
+	php --ini
+	vi /usr/local/php/etc/php.ini
+图片不能上传2M的，如下修改，在http{}里添加
+	vi /usr/local/nginx/conf/nginx.conf
+	client_max_body_size 20m;
+	/etc/init.d/nginx restart
+
+service mysql stop
+service mysql start
+service mysql restart
+进入mysql 修改密码
+update mysql.user set password=password("root") where user='root';
+
+---忘记 mysql 密码
+	https://www.cnblogs.com/liulei-LL/p/7898804.html
+	service mysql stop
+	mysqld_safe --user=mysql --skip-grant-tables --skip-networking &
+	mysql -u root
+	update mysql.user set password=password("root") where user='root';
+	flush privileges;
+	quit
+	service mysql stop
+	service mysql start
+------------------------全流程 end
+**验证
+	mysql -h localhost -uroot -proot
+	select user,host from user;
+
+
+--------------------------导入数据库
+导入数据库
+	mysql -h localhost -uroot -p  b2t_im < tp_kefu.sql
+	mysql -h localhost -uroot -p  bb2t_im < tp_kefu.sql
+
+	https://blog.csdn.net/u011262253/article/details/51579813
+	source /home/wwwroot/im22/data/tp_kefu.sql
+
+执行：/etc/init.d/ nginx restart 重启生效，
+
+-----------------查cup
+	top
+	
+
+ // 数据库名
+    'database'       => 'tpshop2.0',
+    // 用户名
+    'username'       => 'root',	
+    // 密码
+    'password'       => 'nci-pl,0okm',
+
+
+
+mysqldump -uroot -p tpshop2.0 > tpshop2.0.sql
+
+
+
+
+----------------------------im不能打开
+/usr/local/nginx/conf
+	/usr/local/nginx/conf/fastcgi.conf
+	最后一行
+	fastcgi_param PHP_ADMIN_VALUE "open_basedir=$document_root/:/tmp/:/proc/";
+
+
+
+
+--------------------------------im文档 修改的地方
+	文档
+	http://help.tp-shop.cn/Index/Help/info/cat_id/3/id/529.html
+
+	bat php路径
+	vendor\GatewayWorker\start_for_win.bat
+
+	需要修改的js
+		application\admin\view\msgbox\index.html
+		public\static\common\js\main.js
+		public\static\common\js\main.mobile.js
+		public\static\test\common\js\main.js
+		public\static\test\common\js\main.mobile.js
+			socket = new WebSocket('ws://192.168.0.146:8283');//线上
+		vendor\GatewayWorker\Applications\live\Events.php
+
+	单商家pc端修改
+		template\pc\rainbow\goods\goodsInfo.html
+
+
+
+
+
+------------多商家
+
+
+给企业加一个店铺管理员，
+
+store_id == 企业id
+管理员		管理账户
+
+
+-------------------------------------------------ssl
+start_gateway.php中设置以下代码。
+
+// 证书最好是申请的证书
+$context = array(
+    // 更多ssl选项请参考手册 http://php.net/manual/zh/context.ssl.php
+    'ssl' => array(
+        // 请使用绝对路径
+        'local_cert'                 => '磁盘路径/server.pem', // 也可以是crt文件
+        'local_pk'                   => '磁盘路径/server.key',
+        'verify_peer'               => false,
+        // 'allow_self_signed' => true, //如果是自签名证书需要开启此选项
+    )
+);
+// websocket协议(端口任意，只要没有被其它程序占用就行)
+$gateway = new Gateway("websocket://0.0.0.0:8283", $context);
+// 开启SSL，websocket+SSL 即wss
+$gateway->transport = 'ssl';
+
+/usr/local/nginx/conf/cert/cert-1541231468611_www.iycgs.com.key
+
+cd /data/www/im/vendor/GatewayWorker-linux/Applications/YourApp
+
+
+
+-----------------------------------cmd设置环境变量
+# 永久设置 GIT_HOME 变量为 abc
+$ setx /m GIT_HOME abc
+
+# 将 C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin 追加到 PATH 变量
+$ setx -m PATH "%PATH%;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin"
+--------------------- 
+原文：https://blog.csdn.net/leonliu06/article/details/78586803 
+版权声明：本文为博主原创文章，转载请附上博文链接！
+
+检测如果没有安装
+	curl -Ss http://www.workerman.net/check.php | php
+	http://doc.workerman.net/appendices/install-extension.html
+
+
+
+
+ps -ef|grep /tmp/HTsUy
+
+
+
+
+
+location ~* \.(eot|otf|ttf|woff|woff2)$ {
+	add_header Access-Control-Allow-Origin *;
+}
+
+location ~* \.(eot|ttf|woff|svg|otf)$ {
+	add_header Access-Control-Allow-Origin *;
+	add_header Access-Control-Allow-Headers X-Requested-With;
+	add_header Access-Control-Allow-Methods GET,POST,OPTIONS;
+}
+
+
+
+
+
+
+
+与index.php 里的这个重复引用导致的问题
+// header("Access-Control-Allow-Origin:*");
+// header("Access-Control-Allow-Methods:GET,POST");
+4.拓展安装链接 :
+	http://doc.workerman.net/appendices/install-extension.html
+
