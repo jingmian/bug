@@ -1,5 +1,5 @@
 手机端--砍价活动--库存为1的商品,用户砍价成功时无法直接支付。
-	保证商品库存足够多，这BUG不会出现。
+	保证商品库存足够多，这BUG不会出现。优先级低
 
 
 \application\mobile\controller\Cart.php
