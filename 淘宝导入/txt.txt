@@ -1,0 +1,5 @@
+修改说明
+	淘宝导入，如果报错了，需要用wps打开csv文件，另存为 CSV(逗号分隔)(*.csv) 选这个保存，然后上传即可
+	如果没有wps，百度一下 下载安装即可。
+		https://www.baidu.com/s?wd=wps&rsv_spt=1&rsv_iqid=0xc35e1c770013e081&issp=1&f=8&rsv_bp=1&rsv_idx=2&ie=utf-8&tn=baiduhome_pg&rsv_enter=1&rsv_dl=ib&rsv_sug3=2&rsv_sug1=2&rsv_sug7=100
+
