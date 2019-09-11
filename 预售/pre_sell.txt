@@ -8,10 +8,8 @@
         if($data['is_finished'] == 0){
             if($data['sell_start_time'] > time()){
                 return '未开始';
-            }elseif($data['sell_start_time'] < time() && $data['sell_end_time'] > time()){
+            }elseif($data['sell_start_time'] < time() && $data['pay_end_time'] > time()){
                 return '进行中';
-            }elseif($data['pay_end_time'] > time()) {
-                return '尾款支付中';
             }else{
                 // 过了尾款支付时间，自动结束活动
                 $this->where('pre_sell_id',$data['pre_sell_id'])->update(['is_finished'=>1]);
@@ -25,4 +23,3 @@
             return '失败结束';
         }
     }
-    
