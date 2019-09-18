@@ -1,0 +1,26 @@
+多商家，用户申请微信提现，会多扣一次余额，是因为$this->user_id 找不到当前用户
+
+
+目录：
+	\application\admin\controller\Finance.php
+		public function transfer(){
+
+
+					}else if($val['bank_name'] == '微信'){
+						$wxpay = array(
+								'userid' => $val['user_id'],//用户ID做更新状态使用
+								'openid' => $oauthUsers['openid'],//收款人微信号对应的 OPENID
+								'pay_code'=>$val['user_id'].$val['id'].date('YmdHis'),//商户订单号，需要唯一
+								'money' => $realMoney,//金额
+								'desc' => '恭喜您提现申请成功!'
+						);
+						include_once  PLUGIN_PATH."payment/weixin/weixin.class.php";
+						$wxpay_obj = new \weixin($code);
+						$res = $wxpay_obj->transfer($wxpay);//微信在线付款转账
+						if($res['partner_trade_no']){
+							//记录帐户变动(accountLog函数会扣除用户的余额，所以要先加上从“冻结资金”里的钱)
+							M('users')->where(array('user_id'=>$val['user_id']))->setInc('user_money',$val['money']);
+							M('users')->where(array('user_id'=>$val['user_id']))->setDec('frozen_money',$val['money']);
+
+							// ----------------------------------------这两行需要改一下，
+							// -----------不是$this->user_id 会找不到当前用户。
