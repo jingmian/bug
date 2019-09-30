@@ -26,3 +26,15 @@
         }
     }
 
+
+
+
+        if($table == 'goods' && $field == 'is_on_sale' && empty($value)){
+            // 下架，则清除该 活动。
+            $goods = Db::name('goods')->where('goods_id',$id_value)->find();
+            if(!empty($goods['prom_type']) || !empty($goods['prom_id'])){
+                Db::name('goods')->where('goods_id',$id_value)->update(['prom_type'=>0,'prom_id'=>0]);
+
+            }
+            Db::name('spec_goods_price')->where('goods_id',$id_value)->update(['prom_type'=>0,'prom_id'=>0]);
+        }
