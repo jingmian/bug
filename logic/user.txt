@@ -1,0 +1,5 @@
+
+\application\common\logic\User.php
+	public function doLeader()   -- 方法无用
+
+

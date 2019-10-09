@@ -55,3 +55,7 @@ git push：将本地的仓库信息推送到远程仓库
 
 
 git clone https://github.com/yuhjg/bug.git
+git clone https://github.com/yuhjg/anjia.git .
+
+git config user.name "yhj"
+git config user.email "395850896@qq.com"
