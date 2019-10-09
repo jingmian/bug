@@ -58,16 +58,18 @@ define('APP_PATH', __DIR__ . '/application/');
 // 定义时间
 define('NOW_TIME',$_SERVER['REQUEST_TIME']);
 
-if($_SERVER['REQUEST_URI'] == '/index.php/Home/Payment/notifyUrl/pay_code/weixin'){
-	$url = SITE_URL . $_SERVER['REQUEST_URI'] . '/id/1';
-	$str = trim(file_get_contents('php://input'));
-	echo http_request($url,$str);
-	exit;
+// 微信 h5 app支付也加上
+if($_SERVER['REQUEST_URI'] == '/index.php/Home/Payment/notifyUrl/pay_code/weixin'
+	|| $_SERVER['REQUEST_URI'] == '/Api/Wxpay/notify.html'
+	|| $_SERVER['REQUEST_URI'] == '/index.php/mobile/Payment/notifyUrl/pay_code/weixinH5'){
+	$php_input = trim(file_get_contents('php://input'));
+	if($php_input){
+		$url = SITE_URL . $_SERVER['REQUEST_URI'] . '?idsss/1111';
+		echo http_request($url,$php_input);
+		exit;
+	}
+	
 }
-//$ss = trim(file_get_contents('php://input'));
-//if($ss){
-	//aaa_log($ss, 'index aaa');
-//}
 
 // 加载框架引导文件
 require __DIR__ . '/thinkphp/start.php';
