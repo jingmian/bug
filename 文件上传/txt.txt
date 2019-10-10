@@ -1,0 +1,33 @@
+ajax提交文件
+	原生方法：
+	https://www.cnblogs.com/fps2tao/p/9760676.html
+
+		var formData = new FormData();//表单id
+        //$.each(e.files,function (i,o) {
+            formData.append('file',e.files[0]);
+        //});
+        $.ajax({
+            type: "POST",
+            url: "{:U('mobile/Ueditor/imageUp',['savePath'=>'order'])}",
+            data: formData,
+            dataType: "json",
+            async: false,
+            cache: false,  //上传文件不需要缓存
+            contentType: false,
+            processData: false, //因为data值是FormData对象，不需要对数据做处理
+            error: function (data) {
+                alert(JSON.stringify(data));
+                layer.open({content:"服务器繁忙, 请联系管理员!",time:2});
+            },
+            success: function (data) {
+                $("#imgdesc").html('上传成功')
+                if(data.state == 'SUCCESS'){
+                    // data.url 返回的图片地址
+                    layer.open({content: '上传成功', time: 2});
+                }else{
+                    layer.open({content: data.state, time: 2});
+                }
+                console.log(data)
+                //layer.open({content: data.url, time: 2});
+            }
+        });
