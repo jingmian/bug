@@ -1,0 +1,20 @@
+拼团活动，启动，或不启动，要设置商品为普通商品，同时规格值也要设置
+
+\application\admin\controller\Index.php
+	public function changeTableVal(){  
+            // 拼团是否启动,防止同一个商品，参与多次拼团活动有矛盾,后台操作补丁
+            if($table == 'team_activity' && $field == 'status'){
+                if(empty($value)){
+                    //取消
+                    Db::name('team_goods_item')->where('team_id',$id_value)->update(['deleted'=>1]);
+                    $goods_id =  Db::name('team_goods_item')->where('team_id',$id_value)->value('goods_id');
+                    if($goods_id)
+                        Db::name('spec_goods_price')->where('goods_id',$goods_id)->update(['prom_type'=>0,'prom_id'=>0]);
+                }else{
+                    //启动,
+                    Db::name('team_goods_item')->where('team_id',$id_value)->update(['deleted'=>0]);
+                    $goods_id =  Db::name('team_goods_item')->where('team_id',$id_value)->value('goods_id');
+                    if($goods_id)
+                    Db::name('spec_goods_price')->where('goods_id',$goods_id)->update(['prom_type'=>6,'prom_id'=>$id_value]);
+                }
+            }
