@@ -1,0 +1,7 @@
+公众号支付 
+	支付授权目录 
+		http://www.test.com/index.php/Mobile/Payment/
+
+扫码支付
+	扫码回调链接
+		http://www.test.com/index.php/Mobile/Payment/notifyUrl/pay_code/weixin
