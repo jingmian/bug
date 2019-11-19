@@ -1,0 +1,60 @@
+
+		<table id="u_list">
+			<thead>
+			<tr>
+				<th>时间</th>
+				<th>当天访问总次数</th>
+				<th>男性访问次数</th>
+				<th>女性访问次数</th>
+				<th>未知性别的次数</th>
+				<th>注册访问次数</th>
+				<th>已购买访问次数</th>
+			</tr>
+			</thead>
+			<tbody>
+			<foreach name="list" item="vo" key="k" >
+				<tr>
+					<td>{$vo.day}</td>
+					<td>{$vo.nums_arr}</td>
+					<td>{$vo.sex1_arr}</td>
+					<td>{$vo.sex2_arr}</td>
+					<td>{$vo.sex0_arr}</td>
+					<td>{$vo.reg_arr}</td>
+					<td>{$vo.buy_arr}</td>
+				</tr>
+			</foreach>
+			</tbody>
+		</table>
+
+	layui.use('table',function(){
+		var table = layui.table;
+		var active = {
+			parseTable:function(){
+				var cols = [[
+					{field:'jname1',width:200,align:'center'},
+					{field:'jname2',width:200,align:'center'},
+					{field:'jname3',width:200,align:'center'},
+					{field:'jname4',width:200,align:'center'},
+					{field:'jname5',width:200,align:'center'},
+					{field:'jname6',width:200,align:'center'},
+					{field:'jname7',width:200,align:'center'}
+				]];
+				var tableElem = $('#u_list').attr('lay-filter','parse-table-demo');
+				layui.each(tableElem.find('thead tr'),function(trIndex,trElem){
+					trElem = $(trElem);
+					layui.each(trElem.find('th'),function(thIndex,thElem){
+						thElem = $(thElem);
+						thElem.attr('lay-data',JSON.stringify((cols[trIndex] && cols[trIndex][thIndex]) ? cols[trIndex][thIndex] : {}))
+					})
+				});
+				table.init('parse-table-demo',{
+					//height:'full-500',
+					page:{}
+					// init render大部分属性，cols不支持，字段信息设置放在thead th lay-data中
+					,width:'1200'
+				})
+			}
+		}
+		// 页面打开就执行
+		active.parseTable();
+	})
