@@ -1,0 +1,56 @@
+本项目只是客服，并没有ichat
+linux,lnmp的安装方法
+
+进入项目根目录如：cd /home/wwwroot/im.im.com
+
+	进入数据库，
+	mysql -h localhost -uroot -proot
+	如果密码复杂
+		mysql -h localhost -uroot -p
+	1、首先建空数据库
+	mysql>create database bb2t_im;
+	2、导入数据库
+	方法一：
+	（1）选择数据库
+	mysql>use bb2t_im ;
+	（2）设置数据库编码
+	mysql>set names utf8;
+	（3）导入数据（注意sql文件的路径）
+	mysql>source ./data/tp_kefu.sql;
+	至此导入成功
+添加域名：
+	lnmp vhost add
+	如域名：im.im.com
+cd /usr/local/nginx/conf/vhost
+vi /usr/local/nginx/conf/fastcgi.conf
+	最后一行修改：
+	fastcgi_param PHP_ADMIN_VALUE "open_basedir=$document_root/:/tmp/:/proc/:/home/wwwroot/im.im.com
+
+	cd /home/wwwroot/im.im.com
+启动im:
+cd /home/wwwroot/im.im.com/vendor/GatewayWorker-linux
+cd /home/wwwroot/im.im.com/vendor/GatewayWorker-linux/Applications/YourApp
+修改js:
+cd /home/wwwroot/im.im.com/public/static/common/js
+
+
+
+在/usr/local/php/etc/php.ini 文件中，不要禁用stream_socket_server方法
+
+重启
+	/etc/init.d/php-fpm restart
+	/etc/init.d/nginx restart
+在域名配置文件中添加：
+	location ~* \.(eot|otf|ttf|woff|woff2)$ {
+		add_header Access-Control-Allow-Origin *;
+	}
+
+检测
+进目录
+cd /home/wwwroot/im.im.com/vendor/GatewayWorker-linux
+php start.php start
+如果报错stream_socket_server
+	在/usr/local/php/etc/php.ini 文件中，不要禁用stream_socket_server方法
+再重新php start.php start，没有任何报错，就成功了
+
+	
